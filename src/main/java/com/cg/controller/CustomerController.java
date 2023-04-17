@@ -2,10 +2,10 @@ package com.cg.controller;
 
 
 import com.cg.model.Customer;
+import com.cg.service.customer.CustomerServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,17 +17,7 @@ public class CustomerController {
     @GetMapping
     public String listPage(Model model) {
 
-        List<Customer> customers = new ArrayList<Customer>();
-        Customer cus1 = new Customer(1L, "NVA", "nva@co.cc", "2345", "28 Nguyễn Tri Phương");
-        Customer cus2 = new Customer(2L, "NVB", "nvb@co.cc", "3456", "29 Nguyễn Tri Phương");
-        Customer cus3 = new Customer(3L, "NVC", "nvc@co.cc", "4567", "38 Nguyễn Tri Phương");
-        Customer cus4 = new Customer(4L, "NVD", "nvd@co.cc", "5678", "39 Nguyễn Tri Phương");
-
-
-        customers.add(cus1);
-        customers.add(cus2);
-        customers.add(cus3);
-        customers.add(cus4);
+        List<Customer> customers = CustomerServiceImpl.init();
 
         model.addAttribute("customers", customers);
 
@@ -35,7 +25,25 @@ public class CustomerController {
     }
 
     @GetMapping("/create")
-    public String createPage() {
+    public String createPage(Model model) {
+        model.addAttribute("customer", new Customer());
+        return "/cp/customer/create";
+    }
+
+    @GetMapping("/edit/{customerId}")
+    public String editPage(Model model, @PathVariable Long customerId) {
+        Customer customer = CustomerServiceImpl.findById(customerId);
+        model.addAttribute("customer", customer);
+        return "/cp/customer/edit";
+    }
+
+    @PostMapping("/create")
+    public String create(@ModelAttribute Customer customer, Model model) {
+
+        customer.setId(CustomerServiceImpl.customerId++);
+        CustomerServiceImpl.customers.add(customer);
+
+        model.addAttribute("customer", new Customer());
         return "/cp/customer/create";
     }
 }

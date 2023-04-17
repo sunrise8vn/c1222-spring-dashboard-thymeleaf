@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-    <title>Create customer</title>
+    <title>Edit customer</title>
     <th:block th:replace="/cp/layout/head :: head"/>
 </head>
 
@@ -29,26 +29,28 @@
                             <div class="col-12 grid-margin">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title">Default form</h4>
-                                        <p class="card-description">
-                                            Basic form layout
-                                        </p>
+                                        <h4 class="card-title">Edit customer</h4>
+                                        <br>
                                         <form class="forms-sample" th:object="${customer}" method="post">
                                             <div class="form-group">
                                                 <label for="fullName">Full name</label>
-                                                <input type="text" class="form-control" id="fullName" th:field="*{fullName}" placeholder="Enter full name">
+                                                <input type="text" class="form-control" id="fullName"
+                                                       th:field="*{fullName}" placeholder="Enter full name">
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email address</label>
-                                                <input type="email" class="form-control" id="exampleInputEmail1" th:field="*{email}" placeholder="Enter email">
+                                                <input type="email" class="form-control" id="exampleInputEmail1"
+                                                       th:field="*{email}" placeholder="Enter email">
                                             </div>
                                             <div class="form-group">
                                                 <label for="phone">Phone</label>
-                                                <input type="tel" class="form-control" id="phone" th:field="*{phone}" placeholder="Phone">
+                                                <input type="tel" class="form-control" id="phone" th:field="*{phone}"
+                                                       placeholder="Phone">
                                             </div>
                                             <div class="form-group">
                                                 <label for="address">Address</label>
-                                                <input type="text" class="form-control" id="address" th:field="*{address}" placeholder="Address">
+                                                <input type="text" class="form-control" id="address"
+                                                       th:field="*{address}" placeholder="Address">
                                             </div>
                                             <button type="submit" class="btn btn-success mr-2">Submit</button>
                                             <button class="btn btn-light">Cancel</button>

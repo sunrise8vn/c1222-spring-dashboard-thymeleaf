@@ -41,6 +41,7 @@
                                                 <th>Phone</th>
                                                 <th>Address</th>
                                                 <th>Status</th>
+                                                <th>Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -52,6 +53,13 @@
                                                         <td th:text="${item.phone}"></td>
                                                         <td th:text="${item.address}"></td>
                                                         <td><label class="badge badge-danger">Pending</label></td>
+                                                        <td>
+                                                            <a th:href="@{/customers/edit/__${item.id}__}">
+                                                                <button class="btn btn-outline-secondary">
+                                                                    Edit
+                                                                </button>
+                                                            </a>
+                                                        </td>
                                                     </tr>
                                                 </th:block>
                                             </tbody>
