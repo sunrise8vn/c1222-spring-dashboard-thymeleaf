@@ -31,6 +31,11 @@
                                     <div class="card-body">
                                         <h4 class="card-title">Edit customer</h4>
                                         <br>
+                                        <p class="card-description">
+                                        <div th:if="${error == true}">
+                                            <p th:each="err : ${#fields.errors('customer.*')}" th:text="${err}"></p>
+                                        </div>
+                                        </p>
                                         <form class="forms-sample" th:object="${customer}" method="post">
                                             <div class="form-group">
                                                 <label for="fullName">Full name</label>

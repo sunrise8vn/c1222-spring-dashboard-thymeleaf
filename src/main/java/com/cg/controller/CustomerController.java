@@ -5,6 +5,8 @@ import com.cg.service.customer.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -59,7 +61,15 @@ public class CustomerController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute Customer customer, Model model) {
+    public String create(Model model, @ModelAttribute("customer") Customer customer, BindingResult bindingResult) {
+
+        new Customer().validate(customer, bindingResult);
+
+        if (bindingResult.hasFieldErrors()) {
+            model.addAttribute("error", true);
+            return "/cp/customer/create";
+        }
+
         customerService.save(customer);
 
         model.addAttribute("customer", new Customer());
@@ -67,7 +77,13 @@ public class CustomerController {
     }
 
     @PostMapping("/edit/{customerId}")
-    public String editPage(Model model, @PathVariable Long customerId, @ModelAttribute Customer customer) {
+    public String editPage(Model model, @PathVariable Long customerId, @Validated @ModelAttribute Customer customer, BindingResult bindingResult) {
+
+        if (bindingResult.hasFieldErrors()) {
+            model.addAttribute("error", true);
+            return "/cp/customer/edit";
+        }
+
         customer.setId(customerId);
         customerService.save(customer);
         model.addAttribute("customer", customer);
