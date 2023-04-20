@@ -1,28 +1,28 @@
 package com.cg.controller;
 
-
 import com.cg.model.Customer;
-import com.cg.service.customer.CustomerServiceImpl;
 import com.cg.service.customer.ICustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 
 @Controller
 @RequestMapping("/customers")
 public class CustomerController {
 
-    private ICustomerService customerService() {
-        return new CustomerServiceImpl();
-    }
+    @Autowired
+    private ICustomerService customerService;
 
     @GetMapping
     public String listPage(Model model) {
 
-        List<Customer> customers = customerService().findAll();
+        List<Customer> customers = customerService.findAll();
 
         model.addAttribute("customers", customers);
 
@@ -37,18 +37,30 @@ public class CustomerController {
 
     @GetMapping("/edit/{customerId}")
     public String editPage(Model model, @PathVariable Long customerId) {
-        Customer customer = customerService().getOne(customerId);
-        model.addAttribute("customer", customer);
+        Optional<Customer> customerOptional = customerService.findOne(customerId);
+        model.addAttribute("customer", customerOptional.get());
         return "/cp/customer/edit";
+    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam String keySearch, Model model) {
+        List<Customer> customers;
+        if (keySearch.equals("")) {
+            customers = customerService.findAll();
+            model.addAttribute("customers", customers);
+        }
+        else {
+            keySearch = "%" + keySearch + "%";
+            customers = customerService.findAllByFullNameLikeOrEmailLikeOrPhoneLikeOrAddressLike(keySearch);
+        }
+
+        model.addAttribute("customers", customers);
+        return "/cp/customer/list";
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute Customer customer, Model model) {
-
-//        customer.setId(CustomerServiceImpl.customerId++);
-//        CustomerServiceImpl.customers.add(customer);
-
-        customerService().save(customer);
+        customerService.save(customer);
 
         model.addAttribute("customer", new Customer());
         return "/cp/customer/create";
@@ -57,7 +69,7 @@ public class CustomerController {
     @PostMapping("/edit/{customerId}")
     public String editPage(Model model, @PathVariable Long customerId, @ModelAttribute Customer customer) {
         customer.setId(customerId);
-        customerService().save(customer);
+        customerService.save(customer);
         model.addAttribute("customer", customer);
         return "/cp/customer/edit";
     }

@@ -28,8 +28,12 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Hoverable Table</h4>
-                                    <p class="card-description">
-                                        Add class <code>.table-hover</code>
+                                        <form action="/customers/search" class="card-description">
+                                            <div class="row col-lg-6">
+                                                <input type="text" name="keySearch" class="form-control">
+                                                <button type="submit" class="btn btn-outline-primary">Search</button>
+                                            </div>
+                                        </form>
                                     </p>
                                     <div class="table-responsive">
                                         <table class="table table-hover">
