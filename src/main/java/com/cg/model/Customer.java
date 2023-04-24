@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -23,6 +24,12 @@ public class Customer implements Validator {
     private String email;
     private String phone;
     private String address;
+
+    @OneToMany
+    private List<Transfer> senders;
+
+    @OneToMany
+    private List<Transfer> recipients;
 
     public Customer() {
     }

@@ -38,7 +38,7 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     @Override
-    public Optional<Customer> findOne(Long id) {
+    public Optional<Customer> findById(Long id) {
         return customerRepository.findById(id);
     }
 

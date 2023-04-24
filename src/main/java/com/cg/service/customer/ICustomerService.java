@@ -15,7 +15,7 @@ public interface ICustomerService {
 
     Customer getOne(Long id);
 
-    Optional<Customer> findOne(Long id);
+    Optional<Customer> findById(Long id);
 
     Customer save(Customer customer);
 }

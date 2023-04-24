@@ -1,7 +1,9 @@
 package com.cg.controller;
 
 import com.cg.model.Customer;
+import com.cg.model.Transfer;
 import com.cg.service.customer.ICustomerService;
+import com.cg.service.transfer.ITransferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,9 @@ public class CustomerController {
 
     @Autowired
     private ICustomerService customerService;
+
+    @Autowired
+    private ITransferService transferService;
 
     @GetMapping
     public String listPage(Model model) {
@@ -39,7 +43,7 @@ public class CustomerController {
 
     @GetMapping("/edit/{customerId}")
     public String editPage(Model model, @PathVariable Long customerId) {
-        Optional<Customer> customerOptional = customerService.findOne(customerId);
+        Optional<Customer> customerOptional = customerService.findById(customerId);
         model.addAttribute("customer", customerOptional.get());
         return "/cp/customer/edit";
     }
@@ -89,4 +93,5 @@ public class CustomerController {
         model.addAttribute("customer", customer);
         return "/cp/customer/edit";
     }
+
 }

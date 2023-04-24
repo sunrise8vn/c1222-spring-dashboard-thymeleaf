@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transfer By Sender</title>
+</head>
+<body>
+    <h1>Transfer By Sender page</h1>
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Sender ID</th>
+                <th>Sender Name</th>
+                <th>Recipient ID</th>
+                <th>Recipient Name</th>
+                <th>Transfer Amount</th>
+                <th>Fees</th>
+                <th>Fees Amount</th>
+                <th>Transaction Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="item : ${transfers}">
+                <tr>
+                    <td th:text="${item.id}"></td>
+                    <td th:text="${item.sender.id}"></td>
+                    <td th:text="${item.sender.fullName}"></td>
+                    <td th:text="${item.recipient.id}"></td>
+                    <td th:text="${item.recipient.fullName}"></td>
+                    <td th:text="${item.transferAmount}"></td>
+                    <td th:text="${item.fees}"></td>
+                    <td th:text="${item.feesAmount}"></td>
+                    <td th:text="${item.transactionAmount}"></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
